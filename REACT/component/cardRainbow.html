@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impariamo sto React</title>
+    <!-- Include React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel compiler to use JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Archivo:700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cardRainbow.css">
+</head>    
+<body>
+    <div id="container"></div>
+    <script type="text/babel">
+        function Card() {
+            const [count, setCount] = React.useState(0);
+
+            // Definisce doTick per incrementare il contatore
+            const doTick = () => {
+                setCount(prevCount => prevCount + 1);
+            };
+
+            // Imposta un timer che esegue doTick ogni secondo
+            React.useEffect(() => {
+                const interval = setInterval(doTick, 1000);
+                return () => clearInterval(interval); // Pulisce l'intervallo quando il componente viene smontato
+            }, []);
+
+            return (
+                <div className="card">
+                    <p>Ciao Alvino464</p>
+                    <h2>Oggi hai già detto {count} Letsgowski</h2>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Card />
+                </div>    
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('container')).render(<App />);
+    </script>
+</body>
+</html>

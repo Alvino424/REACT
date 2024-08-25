@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impariamo sto React</title>
+    <!-- Include React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel compiler to use JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+   
+    <link rel="stylesheet" href="greenButton.css">
+</head>
+<body>
+    <!-- Div dove verrà montata l'applicazione React -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function GreenButtonWithBlackBox({ buttonText }) {
+          const [isHovered, setIsHovered] = React.useState(false);
+          const [isClicked, setIsClicked] = React.useState(false);
+        
+          const handleMouseEnter = () => {
+            setIsHovered(true);
+          };
+        
+          const handleMouseLeave = () => {
+            setIsHovered(false);
+            setIsClicked(false); // Reset dello stato di clic quando il mouse lascia il bottone
+          };
+
+          const handleClick = () => {
+            setIsClicked(true);
+          };
+        
+          return (
+            <div style={{ position: 'relative', display: 'inline-block', marginBottom: '20px' }}>
+              <button
+                style={{
+                  backgroundColor: 'green',
+                  color: 'white',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  position: 'relative',
+                  zIndex: 1,
+                  marginLeft: isHovered ? (isClicked ? '5px' : '-10px') : '0',
+                  marginTop: isHovered ? '-10px' : '0',
+                  boxShadow: isHovered ? 'none' : '5px 5px 0px black',
+                  transition: 'all 0.2s ease-in-out'
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleClick}
+              >
+                {buttonText}
+              </button>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  left: '10px',
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'black',
+                  zIndex: 0,
+                  borderRadius: '5px'
+                }}
+              ></div>
+            </div>
+          );
+        }
+        
+        function App() {
+          return (
+            <div>
+              <GreenButtonWithBlackBox buttonText="Clicca qui" />
+              
+            </div>
+          );
+        }
+        
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
+

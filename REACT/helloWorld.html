@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impariamo sto React</title>
+    <!-- Include React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel compiler to use JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <!-- Container for HelloWorld component -->
+    <div id="hello"></div>
+
+    <!-- Container for LoggedUser component -->
+    <div id="app"></div>
+
+    <div class="hr-container"> <hr /></div>
+
+    <!-- Container for LikeButton component -->
+    <div id="like"></div>
+    
+    
+    <script type="text/babel">
+        // Component using a functional approach
+        function HelloWorld() {
+            return <p>Hello <strong>React</strong>!</p>;
+        }
+
+        // Render the HelloWorld component
+        ReactDOM.createRoot(document.getElementById("hello")).render(<HelloWorld />);
+    </script>
+
+    <script type="text/babel">
+        // Updated component using a functional approach
+        function LoggedUser({ user }) {
+            return (
+                <p>
+                    Benvenuto <strong>{user.fullName().toUpperCase()}</strong>, 
+                    sei collegato come <em>{user.userName}</em>.
+                </p>
+            );
+        }
+
+        // User information
+        const userInfo = {
+            userName: 'admin',
+            firstName: 'Pippo',
+            lastName: 'Pluto',
+            fullName: function() {
+                return this.firstName + ' ' + this.lastName;
+            }
+        };
+
+        // Render the LoggedUser component into the app div
+        ReactDOM.createRoot(document.getElementById('app')).render(<LoggedUser user={userInfo} />);
+    </script>
+
+    <script type="text/babel">
+        // Importa l'hook useState da React
+        const { useState } = React;
+
+        // Definizione del componente LikeButton
+        function LikeButton() {
+            // Dichiarazione dello stato 'liked' inizializzato a false
+            const [liked, setLiked] = useState(false);
+
+            // Funzione per gestire il clic sul pulsante
+            const handleClick = () => {
+                setLiked(!liked); // Inverte lo stato 'liked'
+            };
+
+            return (
+                <button 
+                    className={`like-button ${liked ? 'liked' : ''}`}
+                    onClick={handleClick}
+                >
+                    {liked ? 'Letsgoski !' : 'Mi Piace'}
+                </button>
+            );
+        }
+
+        // Renderizza il componente LikeButton nel div con id 'like'
+        ReactDOM.createRoot(document.getElementById('like')).render(<LikeButton />);
+    </script>
+
+</body>
+</html>
+

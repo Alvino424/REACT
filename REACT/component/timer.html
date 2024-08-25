@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer con React</title>
+    <!-- Include React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel compiler to use JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Stili CSS inline per semplicità -->
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .timer-container {
+            text-align: center;
+        }
+        .timer-display {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .timer-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .start {
+            background-color: green;
+            color: white;
+        }
+        .stop {
+            background-color: red;
+            color: white;
+        }
+        .reset {
+            background-color: gray;
+            color: white;
+        }
+        .partials {
+            margin-top: 20px;
+        }
+        .partial {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer"></div>
+
+    <script type="text/babel">
+        function Timer() {
+            const [time, setTime] = React.useState(0);
+            const [isActive, setIsActive] = React.useState(false);
+            const [partials, setPartials] = React.useState([]);
+
+            // Gestisce il funzionamento del timer
+            React.useEffect(() => {
+                let interval = null;
+
+                if (isActive) {
+                    interval = setInterval(() => {
+                        setTime(prevTime => prevTime + 1);
+                    }, 1000); // Incrementa il tempo ogni secondo (1000 ms)
+                } else if (!isActive && time !== 0) {
+                    clearInterval(interval);
+                }
+
+                return () => clearInterval(interval);
+            }, [isActive, time]);
+
+            const startTimer = () => {
+                setIsActive(true);
+            };
+
+            const stopTimer = () => {
+                setIsActive(false);
+                setPartials(prevPartials => [
+                    ...prevPartials,
+                    time
+                ]);
+            };
+
+            const resetTimer = () => {
+                setIsActive(false);
+                setTime(0);
+                setPartials([]);
+            };
+
+            return (
+                <div className="timer-container">
+                    <div className="timer-display">
+                        {new Date(time * 1000).toISOString().substr(11, 8)}
+                    </div>
+                    <button className="timer-button start" onClick={startTimer}>
+                        Start
+                    </button>
+                    <button className="timer-button stop" onClick={stopTimer}>
+                        Stop
+                    </button>
+                    <button className="timer-button reset" onClick={resetTimer}>
+                        Reset
+                    </button>
+                    <div className="partials">
+                        <h3>Parziali:</h3>
+                        {partials.map((partial, index) => (
+                            <div key={index} className="partial">
+                                {`Parziale ${index + 1}: ${new Date(partial * 1000).toISOString().substr(11, 8)}`}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div>
+                    <Timer />
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('timer')).render(<App />);
+    </script>
+</body>
+</html>

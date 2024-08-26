@@ -1,0 +1,63 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+#root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.green-button-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.green-button {
+    background-color: #08ed31;
+    color: black;
+    padding: 40px 70px;
+    border: 3px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.green-button.hovered {
+    transform: translate(-15px, -20px);
+    box-shadow: none;
+}
+
+.green-button.clicked {
+    transform: translate(5px, 5px);
+}
+
+.black-box {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 0;
+    border-radius: 5px;
+    transform: translate(5px, 5px);
+    transition: transform 0.2s ease-in-out;
+}
+
+#counter-container {
+    margin-top: 20px;
+    font-size: 14px;
+    color: green;
+    text-align: center;
+}

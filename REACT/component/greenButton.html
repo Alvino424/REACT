@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impariamo sto React</title>
+    <!-- Include React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel compiler to use JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+   
+    <link rel="stylesheet" href="greenButton.css">
+</head>
+<body>
+    <!-- Div dove verrà montata l'applicazione React -->
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState } = React;
+
+      function GreenButtonWithBlackBox({ buttonText, onButtonClick }) {
+        const [isHovered, setIsHovered] = useState(false);
+        const [isClicked, setIsClicked] = useState(false);
+        
+        const handleMouseEnter = () => {
+          setIsHovered(true);
+        };
+        
+        const handleMouseLeave = () => {
+          setIsHovered(false);
+          setIsClicked(false);
+        };
+        
+        const handleClick = () => {
+          setIsClicked(true);
+          if (onButtonClick)onButtonClick();  //se attivo onbuttonClick Passa l'evento click counter
+        };
+  
+        return (
+          <div className="green-button-container">
+            <button
+              className={`green-button ${isHovered && !isClicked ? 'hovered' : ''} ${isClicked ? 'clicked' : ''}`}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onClick={handleClick}
+            >
+              {buttonText}
+            </button>
+            <div className="black-box"></div>
+          </div>
+        ); 
+      }
+/*
+      function ClickCounter({ count }) {
+        return (
+          <div id="counter-container">
+            Il bottone è stato cliccato {count} {count === 1 ? 'volta' : 'volte'}.
+          </div>
+        );
+      }
+*/
+
+      function App() {
+        /*
+        const [clickCount, setClickCount] = useState(0);
+
+        const handleButtonClick = () => {
+          setClickCount(prevCount => prevCount + 1);
+        };
+        */
+        return (
+          <>
+            <GreenButtonWithBlackBox buttonText="Clicca qui" /*onButtonClick={handleButtonClick}*/ />
+            {/*<ClickCounter count={clickCount} />*/}
+          </>
+        );
+      }
+
+      // Renderizza l'applicazione nel div con id 'root'
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
+
+
+

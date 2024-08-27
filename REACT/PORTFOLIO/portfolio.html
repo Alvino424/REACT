@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Portfolio</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const Portfolio = () => {
+            return (
+                <div className="container">
+                    <header>
+                        <div className="logo">LOGO</div>
+                        <div className="menu-icon"></div>
+                    </header>
+                    <div className="header-spacer"></div>
+                    <div className="cards_wrap">
+                        {['CHI SONO', 'PROGETTI', 'CONTATTI'].map((text, index) => (
+                            <div key={text} className="cards_wrap__card">
+                                <div className={`cards_wrap__card-stick color${index + 1}`}>
+                                    <h2>{text}<span>Scrollami</span></h2>
+                                    <div className="card-content">{text}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <footer className="footer">
+                        <span>CIAO BOMBER</span>
+                    </footer>
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<Portfolio />);
+    </script>
+    <div class="scroll-space"></div>
+</body>
+</html>
